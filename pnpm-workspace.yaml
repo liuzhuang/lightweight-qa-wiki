@@ -1,0 +1,4 @@
+allowBuilds:
+  'better-sqlite3@12.8.0': true
+  esbuild: false
+  unrs-resolver: false

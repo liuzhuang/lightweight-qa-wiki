@@ -1,0 +1,126 @@
+{
+  "description": "Deterministic sample traces for exercising the offline evaluator; these are not live-model quality claims.",
+  "records": [
+    {
+      "id": "cross-document-service-fit",
+      "scenario": "cross_document",
+      "question": "星桥协作台的示例合同号是什么，如何获得技术支持？",
+      "expected": {
+        "source_ids": ["src_b2117b87c3276666", "src_f08bbea9c66bf3fc"],
+        "refused": false,
+        "used_source_fallback": false
+      },
+      "actual": {
+        "retrieved_source_ids": ["src_b2117b87c3276666", "src_f08bbea9c66bf3fc", "src_6ba4f29f1089bbce"],
+        "proposed_citation_ids": ["src_b2117b87c3276666", "src_f08bbea9c66bf3fc"],
+        "final_citation_ids": ["src_b2117b87c3276666", "src_f08bbea9c66bf3fc"],
+        "refused": false,
+        "used_source_fallback": false
+      }
+    },
+    {
+      "id": "exact-product-code",
+      "scenario": "exact_identifier",
+      "question": "产品编码 NQ-100 对应什么产品？",
+      "expected": {
+        "source_ids": ["src_b2117b87c3276666"],
+        "refused": false,
+        "used_source_fallback": false
+      },
+      "actual": {
+        "retrieved_source_ids": ["src_b2117b87c3276666"],
+        "proposed_citation_ids": ["src_b2117b87c3276666"],
+        "final_citation_ids": ["src_b2117b87c3276666"],
+        "refused": false,
+        "used_source_fallback": false
+      }
+    },
+    {
+      "id": "price-source-fallback",
+      "scenario": "numeric_fallback",
+      "question": "NQ-100 的未税价格是多少？",
+      "expected": {
+        "source_ids": ["src_b2117b87c3276666"],
+        "refused": false,
+        "used_source_fallback": true
+      },
+      "actual": {
+        "retrieved_source_ids": ["src_b2117b87c3276666"],
+        "proposed_citation_ids": ["src_b2117b87c3276666"],
+        "final_citation_ids": ["src_b2117b87c3276666"],
+        "refused": false,
+        "used_source_fallback": true
+      }
+    },
+    {
+      "id": "follow-up-pronoun",
+      "scenario": "multi_turn",
+      "question": "它的服务响应时间呢？",
+      "expected": {
+        "source_ids": ["src_c83b5ab86cd94802"],
+        "refused": false,
+        "used_source_fallback": true
+      },
+      "actual": {
+        "retrieved_source_ids": ["src_c83b5ab86cd94802"],
+        "proposed_citation_ids": ["src_c83b5ab86cd94802"],
+        "final_citation_ids": ["src_c83b5ab86cd94802"],
+        "refused": false,
+        "used_source_fallback": true
+      }
+    },
+    {
+      "id": "separate-thread-context",
+      "scenario": "thread_isolation",
+      "question": "另一个线程中的“它”是什么产品？",
+      "expected": {
+        "source_ids": [],
+        "refused": true,
+        "used_source_fallback": true
+      },
+      "actual": {
+        "retrieved_source_ids": [],
+        "proposed_citation_ids": [],
+        "final_citation_ids": [],
+        "refused": true,
+        "used_source_fallback": true
+      }
+    },
+    {
+      "id": "outside-knowledge-domain",
+      "scenario": "out_of_scope",
+      "question": "明天上海天气如何？",
+      "expected": {
+        "source_ids": [],
+        "refused": true,
+        "used_source_fallback": true
+      },
+      "actual": {
+        "retrieved_source_ids": [],
+        "proposed_citation_ids": [],
+        "final_citation_ids": [],
+        "refused": true,
+        "used_source_fallback": true
+      }
+    },
+    {
+      "id": "reject-unknown-citation",
+      "scenario": "invalid_citation",
+      "question": "未激活许可的退款期限是否为付款后 7 个自然日？",
+      "expected": {
+        "source_ids": ["src_bff4d56329d95320"],
+        "refused": true,
+        "used_source_fallback": true,
+        "citation_guard_triggered": true
+      },
+      "actual": {
+        "retrieved_source_ids": ["src_bff4d56329d95320"],
+        "proposed_citation_ids": ["src_missing"],
+        "final_citation_ids": [],
+        "refused": true,
+        "used_source_fallback": true,
+        "citation_guard_triggered": true
+      }
+    }
+  ]
+}

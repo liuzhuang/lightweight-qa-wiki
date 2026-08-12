@@ -1,0 +1,60 @@
+{
+  "version": 1,
+  "knowledge_version": "5583b8327b7db98d",
+  "sources": {
+    "src_6b4a8568d5b43b89": {
+      "file": "company.md",
+      "locator": "L1-L1",
+      "checksum": "ed6207c60b1dd48cfdaa772430b661cbd79f6c61c56e5be736ff2aa5da3187c8",
+      "excerpt": "# 璟云科技企业资料"
+    },
+    "src_6ba4f29f1089bbce": {
+      "file": "company.md",
+      "locator": "L3-L3",
+      "checksum": "dfb81f7a546332d62868d4f17820a72e30de99d90215ab8ab569e86280388937",
+      "excerpt": "璟云科技是一家虚构的企业协作软件公司，总部位于杭州，工作日服务时间为北京时间 09:00–18:00。"
+    },
+    "src_f08bbea9c66bf3fc": {
+      "file": "company.md",
+      "locator": "L5-L5",
+      "checksum": "447db713b082ca0ee144b0ebf7482363cdbedc515e72c76085210a35e4e75244",
+      "excerpt": "企业客户通过 support@example.invalid 获取技术支持。合同编号和产品编码必须完整提供，客服不会根据模糊描述猜测客户身份。"
+    },
+    "src_a459ce451143a172": {
+      "file": "company.md",
+      "locator": "L7-L7",
+      "checksum": "4a0aea7ef892d6531ce3c21e81ea9fcf6b5dfc9c8580502ade07b40de52754e8",
+      "excerpt": "本文档中的公司、产品、价格、合同和联系方式均为演示数据，不对应任何真实主体。"
+    },
+    "src_462401386acee292": {
+      "file": "products.xlsx",
+      "locator": "产品目录!R1",
+      "checksum": "44573e6568d10c810b916bbe959a7f2d3df59b81d4a32502f662f369b953e322",
+      "excerpt": "A=产品编码 | B=产品名称 | C=未税价格 | D=币种 | E=许可用户数 | F=示例合同号 | G=含税参考价 | H=计算说明"
+    },
+    "src_b2117b87c3276666": {
+      "file": "products.xlsx",
+      "locator": "产品目录!R2",
+      "checksum": "1e89d0ef3a435bacf8267a62ece3e9fd7cf4f251d2e386015979056b95b82f28",
+      "excerpt": "A=NQ-100 | B=星桥协作台 | C=1299 | D=CNY/年 | E=50 | F=CT-2026-A01 | G=1376.94 | H==C2*1.06"
+    },
+    "src_f97b9fea4dde491c": {
+      "file": "products.xlsx",
+      "locator": "产品目录!R3",
+      "checksum": "f1182b26249a6276b83d57a2cfb59fca113e65f172e47091f5414cdfad285cf6",
+      "excerpt": "A=NS-200 | B=云盾审计盒 | C=8999 | D=CNY/年 | E=200 | F=CT-2026-B02 | G=9538.94 | H==C3*1.06"
+    },
+    "src_c83b5ab86cd94802": {
+      "file": "service-policy.pptx",
+      "locator": "slide:1",
+      "checksum": "ef35ffc88292452b2daec451bc11a3d2a0e93743a229fe728f27aa9462d49a04",
+      "excerpt": "企业服务响应政策\nP1 严重故障：2 小时内首次响应。\nP2 一般故障：8 个工作小时内首次响应。\n服务时间：工作日 09:00–18:00（北京时间）。"
+    },
+    "src_bff4d56329d95320": {
+      "file": "service-policy.pptx",
+      "locator": "slide:2",
+      "checksum": "95381baf6859cce5ee0bfee6452914e3e511abcf582688c3239ee6c29bf53605",
+      "excerpt": "退款与变更政策\n未激活的软件许可可在付款后 7 个自然日内申请退款。\n已经激活的许可不支持退款，但可在同一合同主体下变更使用人。\n退款申请必须提供完整合同号和产品编码。"
+    }
+  }
+}

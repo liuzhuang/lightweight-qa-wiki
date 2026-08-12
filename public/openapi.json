@@ -1,0 +1,183 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Lightweight QA Wiki API",
+    "version": "0.1.0",
+    "description": "Local, agent-facing closed-domain QA over an OKF Wiki. This API has no authentication and must not be exposed directly to the public internet."
+  },
+  "servers": [{ "url": "http://127.0.0.1:3000" }],
+  "paths": {
+    "/api/qa": {
+      "post": {
+        "operationId": "askKnowledgeBase",
+        "summary": "Ask a synchronous, thread-aware question",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/QaRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Grounded answer or a normal closed-domain refusal",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/QaResponse" } }
+            }
+          },
+          "400": { "$ref": "#/components/responses/InvalidRequest" },
+          "409": { "$ref": "#/components/responses/ThreadBusy" },
+          "502": { "$ref": "#/components/responses/UpstreamModelError" },
+          "503": { "$ref": "#/components/responses/ServiceUnavailable" },
+          "500": { "$ref": "#/components/responses/InternalError" }
+        }
+      }
+    },
+    "/api/health": {
+      "get": {
+        "operationId": "getHealth",
+        "summary": "Check Wiki, source map, and SQLite readiness",
+        "responses": {
+          "200": {
+            "description": "All local dependencies are ready",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/HealthResponse" } }
+            }
+          },
+          "503": {
+            "description": "One or more local dependencies are not ready",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/HealthResponse" } }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "QaRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["thread_id", "question"],
+        "properties": {
+          "thread_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9._:-]+$"
+          },
+          "question": { "type": "string", "minLength": 1, "maxLength": 8000 }
+        }
+      },
+      "Citation": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["source_id", "file", "locator", "excerpt"],
+        "properties": {
+          "source_id": { "type": "string" },
+          "file": { "type": "string" },
+          "locator": { "type": "string" },
+          "excerpt": { "type": "string" }
+        }
+      },
+      "QaResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "run_id",
+          "thread_id",
+          "knowledge_version",
+          "answer",
+          "refused",
+          "refusal_reason",
+          "used_source_fallback",
+          "citations"
+        ],
+        "properties": {
+          "run_id": { "type": "string", "format": "uuid" },
+          "thread_id": { "type": "string" },
+          "knowledge_version": { "type": "string" },
+          "answer": { "type": "string" },
+          "refused": { "type": "boolean" },
+          "refusal_reason": {
+            "oneOf": [
+              { "type": "string", "enum": ["out_of_scope", "insufficient_evidence"] },
+              { "type": "null" }
+            ]
+          },
+          "used_source_fallback": { "type": "boolean" },
+          "citations": { "type": "array", "items": { "$ref": "#/components/schemas/Citation" } }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["error"],
+        "properties": {
+          "error": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["code", "message"],
+            "properties": {
+              "code": {
+                "type": "string",
+                "enum": [
+                  "invalid_request",
+                  "thread_busy",
+                  "knowledge_not_ready",
+                  "model_unavailable",
+                  "upstream_model_error",
+                  "internal_error"
+                ]
+              },
+              "message": { "type": "string" }
+            }
+          }
+        }
+      },
+      "HealthResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["status", "knowledge_version", "checks"],
+        "properties": {
+          "status": { "type": "string", "enum": ["ok", "unhealthy"] },
+          "knowledge_version": { "type": ["string", "null"] },
+          "checks": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["wiki", "source_map", "sqlite"],
+            "properties": {
+              "wiki": { "type": "boolean" },
+              "source_map": { "type": "boolean" },
+              "sqlite": { "type": "boolean" }
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "InvalidRequest": {
+        "description": "Malformed JSON or invalid request fields",
+        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponse" } } }
+      },
+      "ThreadBusy": {
+        "description": "The same thread already has an in-flight request",
+        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponse" } } }
+      },
+      "UpstreamModelError": {
+        "description": "OpenAI-compatible model request failed",
+        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponse" } } }
+      },
+      "ServiceUnavailable": {
+        "description": "Knowledge base is not ready or the model is not configured",
+        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponse" } } }
+      },
+      "InternalError": {
+        "description": "Unexpected local service failure",
+        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponse" } } }
+      }
+    }
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "name": "lightweight-qa-wiki",
+  "version": "0.1.0",
+  "type": "module",
+  "private": false,
+  "description": "Agent-facing lightweight QA knowledge base built with Next.js, LangChain, LangGraph, SQLite, and OpenWiki.",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "packageManager": "pnpm@10.33.2",
+  "scripts": {
+    "dev": "next dev --hostname 127.0.0.1",
+    "build": "next build",
+    "start": "next start --hostname 127.0.0.1",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "kb:build": "node --env-file-if-exists=.env.local --import tsx scripts/kb.ts build",
+    "kb:update": "node --env-file-if-exists=.env.local --import tsx scripts/kb.ts update",
+    "kb:check": "tsx scripts/kb.ts check",
+    "kb:status": "tsx scripts/kb.ts status",
+    "eval": "tsx scripts/eval.ts"
+  },
+  "dependencies": {
+    "@langchain/core": "1.2.5",
+    "@langchain/langgraph": "1.4.9",
+    "@langchain/langgraph-checkpoint-sqlite": "1.0.3",
+    "@langchain/openai": "1.5.6",
+    "better-sqlite3": "12.8.0",
+    "exceljs": "4.4.0",
+    "fast-xml-parser": "5.10.1",
+    "fflate": "0.8.3",
+    "langchain": "1.5.5",
+    "next": "16.3.0",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "7.6.13",
+    "@types/node": "24.10.1",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "eslint": "9.39.2",
+    "eslint-config-next": "16.3.0",
+    "openwiki": "0.3.2",
+    "tsx": "4.21.0",
+    "typescript": "5.9.3",
+    "vitest": "4.1.0",
+    "yaml": "2.9.0"
+  }
+}
